@@ -20,6 +20,15 @@ type readable across the room). It must always satisfy three functions:
 Any change that weakens one of the three functions is wrong, however pretty
 the code.
 
+**Hard constraint — no server, ever.** The app is a fully self-contained
+`.wgt`: all content, fonts, and assets ship inside the widget, and it must run
+complete with the TV's network unplugged. No backend, no companion server, no
+host machine, no CDN — this is the opposite of Babak TV's architecture, so
+never copy its server/client split. Content updates happen by editing the data
+files, bumping the version, and reinstalling. Direct TV→internet calls (e.g.
+Lichess) are permitted only as optional enhancement: the app must behave
+identically minus freshness when they fail.
+
 ## Agent workflow (IMPORTANT — how to work on this repo)
 
 - **Fable** (`claude-fable-5`) is the **advisor & planner**: owns architecture,
@@ -86,6 +95,9 @@ Desktop preview (catches everything except real remote keys and fonts):
 python3 -m http.server 8080   # from the app dir; open in Chrome at 1920×1080
 ```
 
+This server is a **dev convenience only** — the app itself must never depend
+on one. It should equally work opened as a plain `file://` page.
+
 Tizen pipeline (CLIs are not on PATH — `$HOME/tizen-studio/tools/ide/bin/tizen`
 and `$HOME/tizen-studio/tools/sdb`):
 
@@ -117,7 +129,8 @@ host PC IP → reboot.
 - `~/projects/Babak TV` — sibling Tizen app for the **same TV**. Its
   `tizen/DEVELOPMENT.md` (spatial nav, key codes, config.xml, image CORS) and
   `scripts/install-tv.sh` (full auto-discover→package→install pipeline) are
-  the authoritative platform references; copy patterns from there first.
+  the authoritative platform references; copy its *platform* patterns, but
+  **not** its client↔server architecture (see the no-server constraint).
 - [`cocodedk/chess-puzzles`](https://github.com/cocodedk/chess-puzzles) —
   Android chess puzzle game built on real Lichess tactics. Source of puzzle
   data/format ideas when the puzzle channel outgrows the built-in seven; the
@@ -141,5 +154,6 @@ host PC IP → reboot.
       prototype, applying the prototype→TV fixes above
 - [ ] Package/sign/install on the TV via the BabakTV profile; verify fonts and
       chess glyphs on-device
-- [ ] Lichess daily-puzzle integration (offline-safe)
+- [ ] Optional: Lichess daily-puzzle fetch, direct TV→lichess.org (no middle
+      server; built-in puzzles remain the fully functional offline baseline)
 - [ ] Rebalance rotation weights after living with it (the schedule is one line)
