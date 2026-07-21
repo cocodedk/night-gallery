@@ -17,6 +17,11 @@ npm test
 # scripts/es-guard.js.
 npm run guard
 
+# --- generated card index must be current ------------------------------------
+# docs/CONTENT-INDEX.md is generated from the card data; a stale copy is a
+# lie in the repo. Check-only (no silent mutation): fails with instructions.
+node scripts/content-index.js --check
+
 # --- 200-line rule (advisory) ------------------------------------------------
 # Warns only, and only about files in THIS commit.
 staged=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|mjs|css|html|sh)$' || true)

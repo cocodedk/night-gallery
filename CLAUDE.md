@@ -46,9 +46,12 @@ There is **no app code yet**. The reference implementation is
 prototype. It defines the aesthetic, content, and rotation mechanics; port it,
 don't reinvent it. Its anatomy:
 
-- **Content pools**: `PUZZLES` (7 FEN mate-in-1/2 positions + notes),
-  `CONCEPTS` (17 tagged cards), `AMBIENT_WORDS` — each drawn via `pool()`,
-  a reshuffling no-repeat bag.
+- **Content pools**: `PUZZLES` (7 FEN mate-in-1/2 positions + notes) and
+  `AMBIENT_WORDS` live in `js/content.js`; `CONCEPTS` (550 tagged cards) is
+  filled by one file per tag under `js/content/` (13 tags — Dansk, Chess,
+  Latin, Sun Tzu, Math, …). Each pool draws via `pool()`, a reshuffling
+  no-repeat bag. `docs/CONTENT-INDEX.md` lists every card (generated —
+  `npm run content-index`).
 - **Card makers** (`cardPuzzle` / `cardConcept` / `cardAmbient`) each return
   `{ node, duration, onEnter?, onExit?, reveal? }` — the whole card contract.
 - **Rotation engine**: `SEQUENCE = [puzzle, concept, concept, ambient]`
@@ -97,6 +100,8 @@ npm run e2e          # G4: Playwright 1920×1080 over file:// (devDep: playwrigh
 npm run check        # G1+G2+G3+G4
 npm run install-tv   # G5: package, verify, install, launch (scripts/install-tv.sh)
 python3 scripts/make-icon.py   # regenerate tizen/icon.png
+npm run content-index          # regenerate docs/CONTENT-INDEX.md (pre-commit
+                               # fails if it is stale — never edit it by hand)
 ```
 
 Desktop preview (catches everything except real remote keys and fonts):
@@ -196,8 +201,11 @@ Versioned in `.githooks/`; activate once per clone with
 
 ## Engineering principles
 
-- **200-line max per file.** The prototype is one 519-line file; the port
+- **200-line max per code file** (js/mjs/css/html/sh). Markdown is exempt —
+  docs are allowed to be long. The prototype is one 519-line file; the port
   splits it (content data / card makers / rotation engine / platform glue).
+  Card data lives one file per tag under `tizen/js/content/`; a tag that
+  outgrows the cap splits into `<tag>-2.js`, never into per-card files.
 - **TDD for logic.** FEN→board parsing, the pool/shuffle, and the rotation
   engine are pure and testable headless in Node; write those tests first.
 - **DRY / KISS / YAGNI.** No speculative abstraction; the card contract
