@@ -25,7 +25,7 @@ assignees: ''
 <!-- Fill in whichever applies. -->
 
 - Desktop browser (name + version): <!-- e.g. Chrome 126 -->
-- TV model + Tizen version: <!-- e.g. Samsung UE50AU8005, Tizen 6.0 -->
+- TV model + Tizen version: <!-- e.g. a 2021 Samsung, Tizen 6.0 -->
 
 ## Additional context
 
