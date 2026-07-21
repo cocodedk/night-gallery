@@ -13,8 +13,8 @@ function check(cond, msg) {
 
 // --- counts ---
 check(Array.isArray(PUZZLES) && PUZZLES.length === 7, 'PUZZLES has 7 entries');
-check(Array.isArray(CONCEPTS) && CONCEPTS.length === 17, 'CONCEPTS has 17 entries');
-check(Array.isArray(AMBIENT_WORDS) && AMBIENT_WORDS.length === 5, 'AMBIENT_WORDS has 5 entries');
+check(Array.isArray(CONCEPTS) && CONCEPTS.length === 49, 'CONCEPTS has 49 entries');
+check(Array.isArray(AMBIENT_WORDS) && AMBIENT_WORDS.length === 6, 'AMBIENT_WORDS has 6 entries');
 
 // --- puzzles ---
 for (const [i, p] of PUZZLES.entries()) {
