@@ -1,0 +1,46 @@
+name: Auto Version
+
+on:
+  push:
+    branches: [main]          # fires on the squash-merge — never on tags (no self-trigger loop)
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-version         # serialize so concurrent merges version in merge order
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 0      # full history + tags, or the next version can't be computed
+      - name: Compute and push the version tag
+        run: |
+          subject="$(git log -1 --pretty=%s)"
+          case "$subject" in *"[skip release]"*) echo "skip marker — no release"; exit 0 ;; esac
+          prefix="${subject%%:*}"                  # text before the first colon
+          type="${prefix%%(*}"; type="${type%!}"   # strip scope and any breaking "!"
+          case "$prefix" in *"!") bump=major ;; esac           # feat!: / fix(scope)!: → major
+          case "${bump:-}" in
+            "") case "$type" in
+                  feat)            bump=minor ;;
+                  fix|perf|revert) bump=patch ;;
+                  *) echo "non-releasing type '$type' — history only"; exit 0 ;;
+                esac ;;
+          esac
+          latest="$(git tag --list 'v*' --sort=-version:refname | head -1)"
+          ver="${latest#v}"; ver="${ver:-0.0.0}"
+          [[ "$ver" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] || { echo "unparseable tag: $latest"; exit 1; }
+          MAJOR=${BASH_REMATCH[1]}; MINOR=${BASH_REMATCH[2]}; PATCH=${BASH_REMATCH[3]}
+          case "$bump" in
+            major) MAJOR=$((MAJOR+1)); MINOR=0; PATCH=0 ;;
+            minor) MINOR=$((MINOR+1)); PATCH=0 ;;
+            patch) PATCH=$((PATCH+1)) ;;
+          esac
+          tag="v$MAJOR.$MINOR.$PATCH"
+          git rev-parse "$tag" >/dev/null 2>&1 && { echo "$tag exists — idempotent no-op"; exit 0; }
+          git tag "$tag" && git push origin "$tag"

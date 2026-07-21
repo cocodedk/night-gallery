@@ -1,6 +1,6 @@
 {
   "name": "night-gallery",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Ambient learning canvas for a Samsung Tizen TV — serverless, self-contained .wgt",
   "scripts": {

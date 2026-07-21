@@ -214,7 +214,10 @@ Versioned in `.githooks/`; activate once per clone with
 - **DRY / KISS / YAGNI.** No speculative abstraction; the card contract
   (`{node, duration, onEnter, onExit, reveal}`) is the only extension point
   needed for new channels.
-- **Conventional Commits.**
+- **Conventional Commits.** They also drive versioning: every push to main is
+  auto-tagged from its commit title (`feat`→minor, `fix`/`perf`/`revert`→patch,
+  `feat!`→major, others→no tag; `[skip release]` opts out) — see
+  `.github/workflows/auto-version.yml`. v1.0.0 = the public release.
 
 ## Roadmap
 
