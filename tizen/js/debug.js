@@ -9,7 +9,7 @@ NG.debug = NG.debug || {};
 (function () {
   var RING_MAX = 30;
   var KEY_MAX = 8;
-  var FONTS = ['Cormorant Garamond', 'IBM Plex Sans', 'NG Chess'];
+  var FONTS = ['Cormorant Garamond', 'IBM Plex Sans', 'NG Chess', 'NG Farsi'];
 
   var ring = [];
   var el = null;
@@ -65,7 +65,7 @@ NG.debug = NG.debug || {};
   function fontLine(fam) {
     try {
       if (!document.fonts) { return fam + ': fonts API unavailable'; }
-      var sample = fam === 'NG Chess' ? '♔' : 'ægØ';
+      var sample = fam === 'NG Chess' ? '♔' : (fam === 'NG Farsi' ? 'تعارف' : 'ægØ');
       var loaded = document.fonts.check('17px "' + fam + '"', sample);
       return fam + ': ' + (loaded ? 'loaded' : 'missing');
     } catch (e) {

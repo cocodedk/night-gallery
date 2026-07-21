@@ -22,7 +22,7 @@ function check(cond, msg) {
 
 // --- counts ---
 const EXPECTED_TAGS = {
-  Chess: 50, Dansk: 60, Design: 30, Electronics: 50, Geography: 45,
+  Chess: 50, Dansk: 60, Design: 30, Electronics: 50, Farsi: 35, Geography: 45,
   History: 25, Latin: 35, Math: 45, Physics: 35, Security: 50,
   'Sun Tzu': 25, Systems: 50, Thinking: 50
 };

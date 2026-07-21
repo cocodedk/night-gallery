@@ -47,9 +47,9 @@ prototype. It defines the aesthetic, content, and rotation mechanics; port it,
 don't reinvent it. Its anatomy:
 
 - **Content pools**: `PUZZLES` (7 FEN mate-in-1/2 positions + notes) and
-  `AMBIENT_WORDS` live in `js/content.js`; `CONCEPTS` (550 tagged cards) is
-  filled by one file per tag under `js/content/` (13 tags — Dansk, Chess,
-  Latin, Sun Tzu, Math, …). Each pool draws via `pool()`, a reshuffling
+  `AMBIENT_WORDS` live in `js/content.js`; `CONCEPTS` (585 tagged cards) is
+  filled by one file per tag under `js/content/` (14 tags — Dansk, Farsi,
+  Chess, Latin, Sun Tzu, Math, …). Each pool draws via `pool()`, a reshuffling
   no-repeat bag. `docs/CONTENT-INDEX.md` lists every card (generated —
   `npm run content-index`).
 - **Card makers** (`cardPuzzle` / `cardConcept` / `cardAmbient`) each return
@@ -61,7 +61,7 @@ don't reinvent it. Its anatomy:
 
 ## Target hardware (hard constraints)
 
-The TV is a **Samsung UE50AU8005 (2021) → Tizen 6.0 → Chromium 76**, frozen
+The TV is a **2021 Samsung → Tizen 6.0 → Chromium 76**, frozen
 forever. Chromium 76 is law: check every CSS/JS feature against it (caniuse)
 before use. ES2015 (`const`, arrows, `for…of`, destructuring) is fine — the
 prototype already complies. **Not** available on 76: `?.`, `??`, flex `gap`,
@@ -117,11 +117,14 @@ Tizen pipeline (CLIs are not on PATH — `$HOME/tizen-studio/tools/ide/bin/tizen
 and `$HOME/tizen-studio/tools/sdb`):
 
 ```bash
-sdb connect 192.168.0.201:26101        # known-good TV address
-tizen package -t wgt -s BabakTV -- .   # reuse the existing signing profile
-tizen install -n NightGallery.wgt -t UE50AU8005KXXC
-tizen run -p <package.AppId> -t UE50AU8005KXXC
+sdb connect <tv-ip>:26101              # or let install-tv.sh auto-discover
+tizen package -t wgt -s <profile> -- . # reuse the existing signing profile
+tizen install -n NightGallery.wgt -t <target>
+tizen run -p <package.AppId> -t <target>
 ```
+
+(The known-good TV address, target name, and profile for this household live
+in local memory, not in the repo — the installer auto-discovers the TV.)
 
 Traps (both cost hours in Babak TV — see its `scripts/install-tv.sh`):
 `tizen build-web` prints a scary-but-cosmetic Java stack trace; and a `.wgt`
@@ -175,11 +178,11 @@ stale code is how you lose an evening.
 
 ## Related projects
 
-- `~/projects/Babak TV` — sibling Tizen app for the **same TV**. Its
-  `tizen/DEVELOPMENT.md` (spatial nav, key codes, config.xml, image CORS) and
-  `scripts/install-tv.sh` (full auto-discover→package→install pipeline) are
-  the authoritative platform references; copy its *platform* patterns, but
-  **not** its client↔server architecture (see the no-server constraint).
+- **Babak TV** — private sibling Tizen app for the same TV (local checkout;
+  path in local memory). Its `tizen/DEVELOPMENT.md` (spatial nav, key codes,
+  config.xml, image CORS) and installer are the authoritative platform
+  references; copy its *platform* patterns, but **not** its client↔server
+  architecture (see the no-server constraint).
 - [`cocodedk/chess-puzzles`](https://github.com/cocodedk/chess-puzzles) —
   Android chess puzzle game built on real Lichess tactics. Source of puzzle
   data/format ideas when the puzzle channel outgrows the built-in seven; the

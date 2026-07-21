@@ -45,8 +45,8 @@ Options:
 
 Env vars: TIZEN_STUDIO (SDK root, default \$HOME/tizen-studio), TV_IP.
 
-Known-good values for this TV: profile BabakTV, target UE50AU8005KXXC,
-TV at 192.168.0.201:26101, app id NightGalry.NightGallery.
+Defaults: profile BabakTV, app id NightGalry.NightGallery. The TV is
+auto-discovered on the local network when --ip is not given.
 EOF
 }
 while [[ $# -gt 0 ]]; do

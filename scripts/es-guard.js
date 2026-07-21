@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 // es-guard: deterministic static gate against Chromium-76-unsupported syntax.
-// The TV (Samsung UE50AU8005 -> Tizen 6.0) is frozen on Chromium 76 forever;
+// The target TV (2021 Samsung -> Tizen 6.0) is frozen on Chromium 76 forever;
 // this catches regressions before they reach the device, where debugging is
 // hard (no remote DevTools, no sdb shell). Scans tizen/js/*.js,
 // tizen/css/*.css and tizen/index.html; exits 1 on any finding.

@@ -43,9 +43,10 @@ async function main() {
     const fontsOk = await page.evaluate(() => {
       return document.fonts.check('17px "Cormorant Garamond"') &&
         document.fonts.check('17px "IBM Plex Sans"') &&
-        document.fonts.check('17px "NG Chess"', '♔');
+        document.fonts.check('17px "NG Chess"', '♔') &&
+        document.fonts.check('17px "NG Farsi"', 'تعارف');
     });
-    assertTrue(fontsOk, 'bundled fonts (Cormorant Garamond, IBM Plex Sans, NG Chess) load from file://');
+    assertTrue(fontsOk, 'bundled fonts (Cormorant Garamond, IBM Plex Sans, NG Chess, NG Farsi) load from file://');
 
     await pressKey(page, 403);
     await expectSoon(page, solutionShown, 'reveal (403) gives .solution the .shown class', assertTrue, 2000);
