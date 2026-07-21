@@ -89,6 +89,16 @@ Platform rules (proven in the sibling Babak TV project):
 
 ## Commands
 
+```bash
+npm run smoke        # G1: node --check every tizen/js file
+npm run test         # G2: unit tests (Node, zero deps)
+npm run guard        # G3: Chromium-76 feature guard (scripts/es-guard.js)
+npm run e2e          # G4: Playwright 1920×1080 over file:// (devDep: playwright)
+npm run check        # G1+G2+G3+G4
+npm run install-tv   # G5: package, verify, install, launch (scripts/install-tv.sh)
+python3 scripts/make-icon.py   # regenerate tizen/icon.png
+```
+
 Desktop preview (catches everything except real remote keys and fonts):
 
 ```bash
@@ -115,6 +125,40 @@ error** — always copy to a space-free name first. `sdb shell` does not work on
 this retail TV. Developer mode: Apps panel → type `12345` → toggle on → set
 host PC IP → reboot.
 
+## Install strategy — fewest retrials (IMPORTANT)
+
+TV installs are the expensive, slow, half-blind part of the loop. Never
+install to "see if it works". Every install must pass ALL gates first, in
+order (`npm run check` runs G1–G4):
+
+- **G1 `npm run smoke`** — `node --check` syntax pass over every `tizen/js`
+  file.
+- **G2 `npm run test`** — unit tests for the pure logic (content data, FEN,
+  pools, rotation engine with a fake clock).
+- **G3 `npm run guard`** — static scan that fails on any Chromium-76-unsupported
+  feature (`?.`, `??`, `inset:`, `gap:`, `clamp()/min()/max()`, `aspect-ratio`,
+  `:focus-visible`, `@import`). This gate exists because these break silently,
+  at runtime, on the TV only.
+- **G4 `npm run e2e`** — Playwright at exactly 1920×1080 against the app over
+  `file://`: boot, fonts load, rotation, every remote key action via synthetic
+  `keyCode` events, zero unexpected console errors.
+- **G5 package verify** — built into `scripts/install-tv.sh`: unzip listing of
+  the `.wgt`, build stamp check, space-free filename.
+- **G6 the first install is a PROBE, not a test.** The app ships an on-screen
+  debug overlay (BLUE key / D) that reports every device unknown at once:
+  build stamp, font/glyph load results, fps, screensaver-API outcome, last
+  received key codes, captured console log. One instrumented session answers
+  all "only-on-TV" questions; fix everything it reveals as one batch, then
+  reinstall once.
+- **G7 soak.** Let it run for hours; watch for screen dimming (screensaver
+  suppression), canvas slowdown, memory creep. Note: the TV's Eco "Auto Power
+  Off" setting can kill any always-on app regardless of code — disable it in
+  TV settings for gallery use.
+
+Bump the `#stamp` build number in `tizen/index.html` on **every** install and
+confirm it on-screen — reinstalls don't always reload the page, and debugging
+stale code is how you lose an evening.
+
 ## Skills
 
 | Situation | Skill |
@@ -137,6 +181,19 @@ host PC IP → reboot.
   planned refresh path is Lichess's free daily-puzzle API (needs `<access>` +
   CSP `connect-src`, and must degrade gracefully offline).
 
+## Git hooks (same regime as Babak TV)
+
+Versioned in `.githooks/`; activate once per clone with
+`bash scripts/install-hooks.sh` (sets `core.hooksPath`).
+
+- **pre-commit** — fast deterministic gates only: `npm run smoke`, `npm test`,
+  `npm run guard` (the Chromium-76 guard), and a 200-line advisory on staged
+  files. The slow e2e gate is deliberately NOT here — it belongs to the
+  pre-install checklist.
+- **commit-msg** — enforces Conventional Commits.
+- **pre-push** — locks pushes to `cocodedk/*` remotes, blocks deletion and
+  non-fast-forward pushes to protected branches, re-runs smoke.
+
 ## Engineering principles
 
 - **200-line max per file.** The prototype is one 519-line file; the port
@@ -150,8 +207,9 @@ host PC IP → reboot.
 
 ## Roadmap
 
-- [ ] Scaffold `tizen/` (config.xml, index.html, css/, js/, icon.png) from the
-      prototype, applying the prototype→TV fixes above
+- [x] Scaffold `tizen/` (config.xml, index.html, css/, js/, icon.png) from the
+      prototype, applying the prototype→TV fixes above (2026-07-21; all four
+      gates green, adversarially reviewed)
 - [ ] Package/sign/install on the TV via the BabakTV profile; verify fonts and
       chess glyphs on-device
 - [ ] Optional: Lichess daily-puzzle fetch, direct TV→lichess.org (no middle

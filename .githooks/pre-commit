@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Fast, deterministic gates only. The /simplify + /code-review convergence loop
+# is an agent workflow (see CLAUDE.md), NOT a hook: it takes minutes, is
+# non-deterministic, and would sit in front of every human commit. The slow
+# Playwright e2e gate belongs to the pre-INSTALL checklist (npm run check),
+# not to every commit.
+
+npm run smoke
+npm test
+
+# --- Chromium 76 guard (the TV runs Tizen 6.0 / Chromium 76) -----------------
+# Unsupported CSS/JS does not fail `node --check` and does not fail in a
+# desktop browser — it fails ONLY on the television, at runtime, silently.
+# Exactly the class of mistake worth catching mechanically. Rules live in
+# scripts/es-guard.js.
+npm run guard
+
+# --- 200-line rule (advisory) ------------------------------------------------
+# Warns only, and only about files in THIS commit.
+staged=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|mjs|css|html|sh)$' || true)
+for f in $staged; do
+  [ -f "$f" ] || continue
+  lines=$(wc -l < "$f")
+  [ "$lines" -le 200 ] || echo "pre-commit: note — $f is $lines lines (CLAUDE.md caps files at 200; split when practical)." >&2
+done

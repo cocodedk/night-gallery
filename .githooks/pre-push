@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# --- (a) owner-lock: only allow pushing to cocodedk-owned remotes ---
+remote_url="${2:-}"
+
+case "$remote_url" in
+  https://github.com/cocodedk/*|git@github.com:cocodedk/*|ssh://git@github.com/cocodedk/*)
+    ;;
+  *)
+    echo "refusal: this repo is locked to the cocodedk GitHub owner." >&2
+    echo "  remote url: $remote_url" >&2
+    echo "  allowed: https://github.com/cocodedk/*, git@github.com:cocodedk/*, ssh://git@github.com/cocodedk/*" >&2
+    exit 1
+    ;;
+esac
+
+# --- (b) protected-branch guard: block deletion / non-fast-forward on key branches ---
+zero_sha="0000000000000000000000000000000000000000"
+protected_branches="refs/heads/main refs/heads/master refs/heads/trunk refs/heads/production refs/heads/prod refs/heads/release"
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  for protected in $protected_branches; do
+    if [ "$remote_ref" = "$protected" ]; then
+      if [ "$local_sha" = "$zero_sha" ]; then
+        echo "refusal: deletion of protected branch '$remote_ref' is blocked." >&2
+        echo "bypass: git push --no-verify" >&2
+        exit 1
+      fi
+
+      if [ "$remote_sha" != "$zero_sha" ]; then
+        if ! git merge-base --is-ancestor "$remote_sha" "$local_sha"; then
+          echo "refusal: non-fast-forward push to protected branch '$remote_ref' is blocked." >&2
+          echo "bypass: git push --no-verify" >&2
+          exit 1
+        fi
+      fi
+    fi
+  done
+done
+
+# --- (c) smoke check ---
+npm run smoke
