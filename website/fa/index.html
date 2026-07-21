@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<!--
+  Keyword targeting (for future edits — remove if this drifts from the copy):
+  primary:   اپلیکیشن یادگیری آرام برای تلویزیون
+  secondary: اسکرین‌سیور تلویزیون سامسونگ متن‌باز, پازل شطرنج آفلاین روی تلویزیون
+  intent:    اطلاع‌رسانی / کشف پروژه — کسی که تصمیم می‌گیرد یک نمایشگر متن‌باز
+             روی تلویزیون سامسونگش نصب کند، یا توسعه‌دهنده‌ای که پیش از کلون کردن
+             پروژه، پیاده‌سازی Tizen را بررسی می‌کند.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Night Gallery — یادگیری آرام روی تلویزیون</title>
+<meta name="description" content="صفحه‌ای که یاد می‌دهد بدون اینکه توجهی بخواهد؛ پازل شطرنج، ۵۸۵ کارت مفهومی در چهارده موضوع، و نوری آرام و کند. رایگان، متن‌باز و کاملاً آفلاین.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cocodedk.github.io/night-gallery/fa/">
+
+<link rel="alternate" hreflang="en" href="https://cocodedk.github.io/night-gallery/">
+<link rel="alternate" hreflang="da" href="https://cocodedk.github.io/night-gallery/da/">
+<link rel="alternate" hreflang="fa" href="https://cocodedk.github.io/night-gallery/fa/">
+<link rel="alternate" hreflang="x-default" href="https://cocodedk.github.io/night-gallery/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Night Gallery">
+<meta property="og:title" content="Night Gallery — یادگیری آرام روی تلویزیون">
+<meta property="og:description" content="صفحه‌ای که یاد می‌دهد بدون اینکه توجهی بخواهد؛ پازل شطرنج، ۵۸۵ کارت مفهومی در چهارده موضوع، و نوری آرام و کند. رایگان، متن‌باز و کاملاً آفلاین.">
+<meta property="og:url" content="https://cocodedk.github.io/night-gallery/fa/">
+<meta property="og:image" content="https://cocodedk.github.io/night-gallery/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Night Gallery — کارتی مشکی و موزه‌ای با قابی طلایی و نماد اسب شطرنج">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="da_DK">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Night Gallery — یادگیری آرام روی تلویزیون">
+<meta name="twitter:description" content="صفحه‌ای که یاد می‌دهد بدون اینکه توجهی بخواهد؛ پازل شطرنج، ۵۸۵ کارت مفهومی در چهارده موضوع، و نوری آرام و کند. رایگان، متن‌باز و کاملاً آفلاین.">
+<meta name="twitter:image" content="https://cocodedk.github.io/night-gallery/og.png">
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Sans:wght@300;400&family=Vazirmatn:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Night Gallery",
+  "description": "بومی برای یادگیری آرام روی تلویزیون هوشمند سامسونگ Tizen: یک پازل شطرنج، یک کارت مفهومی از مجموعه‌ای ۵۸۵ تایی در چهارده موضوع، یا یک وقفهٔ نوری آرام — یکی‌یکی، تمام‌صفحه. بدون سرور، خودبسنده و رایگان.",
+  "url": "https://cocodedk.github.io/night-gallery/fa/",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Tizen, Web",
+  "inLanguage": "fa",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": {
+    "@type": "Person",
+    "name": "بابک بندپی",
+    "url": "https://cocode.dk",
+    "sameAs": ["https://linkedin.com/in/babakbandpey", "https://github.com/cocodedk"]
+  },
+  "codeRepository": "https://github.com/cocodedk/night-gallery"
+}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="wordmark" href="/night-gallery/" lang="en" dir="ltr">Night Gallery</a>
+  <nav class="lang-switch" aria-label="زبان">
+    <a href="../" hreflang="en" lang="en">English</a> ·
+    <a href="../da/" hreflang="da" lang="da">Dansk</a> ·
+    <span aria-current="page">فارسی</span>
+  </nav>
+</header>
+
+<main>
+<h1 class="sr-only">Night Gallery: بومی آرام برای یادگیری، روی تلویزیون شما</h1>
+
+<section class="hero" aria-label="بازسازی صفحهٔ برنامه">
+  <div class="app-chrome" dir="ltr" aria-hidden="true">
+    <div class="app-frame"></div>
+    <div class="app-clock">21:47</div>
+    <div class="app-progress"><div class="app-progress-bar"></div></div>
+  </div>
+  <div class="card-stack" dir="ltr" aria-hidden="true">
+      <article class="hero-card">
+        <p class="hero-card-eyebrow">Farsi</p>
+        <p class="hero-card-title">تعارف</p>
+        <div class="hero-card-rule"></div>
+        <p class="hero-card-body">Taârof is the choreography of offer and refusal — a host insists, a guest declines, both repeat themselves, and only the third round reveals who actually meant it.</p>
+      </article>
+      <article class="hero-card">
+        <p class="hero-card-eyebrow">Latin</p>
+        <p class="hero-card-title">Festina lente</p>
+        <div class="hero-card-rule"></div>
+        <p class="hero-card-body">&ldquo;Make haste slowly.&rdquo; Suetonius records it as Augustus&rsquo;s favourite saying — the emperor&rsquo;s reminder that speed without care is just a faster way to fail.</p>
+      </article>
+      <article class="hero-card">
+        <p class="hero-card-eyebrow">Chess</p>
+        <p class="hero-card-title">Zugzwang</p>
+        <div class="hero-card-rule"></div>
+        <p class="hero-card-body">A position where every legal move makes things worse — the obligation to act becomes the losing condition. German for &ldquo;compulsion to move.&rdquo;</p>
+      </article>
+      <article class="hero-card">
+        <p class="hero-card-eyebrow">Thinking</p>
+        <p class="hero-card-title">Chesterton&rsquo;s fence</p>
+        <div class="hero-card-rule"></div>
+        <p class="hero-card-body">Never remove a fence until you know why it was put up. Reforms made in ignorance of a rule&rsquo;s purpose tend to rediscover that purpose the hard way.</p>
+      </article>
+  </div>
+  <p class="hero-caption">این خودِ برنامه است؛ روی دیوار هم دقیقاً همین‌طور دیده می‌شود.</p>
+</section>
+
+<section class="section" aria-label="کاری که انجام می‌دهد">
+  <h2>سه کاری که همیشه انجام می‌دهد</h2>
+  <ul class="functions">
+    <li>
+      <h3>یاد می‌دهد</h3>
+      <p>یک پازل شطرنج برای فکر کردن بین کارها؛ جوابش تا مدتی پنهان می‌ماند. یک کارت مفهومی از میان ۵۸۵ کارت، در چهارده موضوع، یکی‌یکی.</p>
+    </li>
+    <li>
+      <h3>در پس‌زمینه کار می‌کند</h3>
+      <p>نه چیزی برای کلیک کردن، نه چیزی که منتظر جواب باشد. چرخش خودش پیش می‌رود، آرام، چه کسی در اتاق باشد چه نباشد.</p>
+    </li>
+    <li>
+      <h3>اتاق را زیباتر می‌کند</h3>
+      <p>هر کارت اول یک دکور است، بعد یک درس. بین کارت‌ها هم نوری آرام و کند به فضا نفس می‌دهد.</p>
+    </li>
+  </ul>
+</section>
+
+<section class="section" id="collection" aria-label="کتابخانهٔ کارت‌ها">
+  <h2>مجموعه</h2>
+  <p class="totals">۵۸۵ کارت، هفت پازل شطرنج، چهارده موضوع.</p>
+  <ul class="tags">
+    <li><span class="tag-name">Systems</span><span class="tag-count">50</span></li>
+    <li><span class="tag-name">Electronics</span><span class="tag-count">50</span></li>
+    <li><span class="tag-name">Chess</span><span class="tag-count">50</span></li>
+    <li><span class="tag-name">Geography</span><span class="tag-count">45</span></li>
+    <li><span class="tag-name">Dansk</span><span class="tag-count">60</span></li>
+    <li><span class="tag-name">Farsi</span><span class="tag-count">35</span></li>
+    <li><span class="tag-name">Latin</span><span class="tag-count">35</span></li>
+    <li><span class="tag-name">Sun Tzu</span><span class="tag-count">25</span></li>
+    <li><span class="tag-name">Math</span><span class="tag-count">45</span></li>
+    <li><span class="tag-name">Physics</span><span class="tag-count">35</span></li>
+    <li><span class="tag-name">Design</span><span class="tag-count">30</span></li>
+    <li><span class="tag-name">History</span><span class="tag-count">25</span></li>
+    <li><span class="tag-name">Security</span><span class="tag-count">50</span></li>
+    <li><span class="tag-name">Thinking</span><span class="tag-count">50</span></li>
+  </ul>
+</section>
+
+<section class="section" aria-label="امتحان کردن نسخهٔ زنده">
+  <h2>همین حالا ببینید</h2>
+  <p class="lede">گالری را مستقیم توی مرورگرتان باز کنید؛ همان فایلی که روی تلویزیون هم اجرا می‌شود.</p>
+  <p class="demo-cta"><a class="cta-link" href="../demo/">باز کردن گالری</a></p>
+  <p class="key-hint">پیکان راست برای کارت بعد، پیکان چپ برای کارت قبل، OK برای مکث.</p>
+</section>
+
+<section class="section" aria-label="نصب روی تلویزیون سامسونگ">
+  <h2>نصب روی تلویزیون</h2>
+  <p class="lede">نصب چهار قدم دارد و هیچ نرم‌افزار خریداری‌شده‌ای لازم نیست.</p>
+  <ol class="steps steps-persian">
+    <li><strong>این مخزن را کلون کنید.</strong> <code>git clone https://github.com/cocodedk/night-gallery.git</code></li>
+    <li><strong>بررسی‌ها را اجرا کنید.</strong> <code>npm run check</code> — همان چهار مرحله‌ای که خود پروژه هم پیش از هر نصب پشت سر می‌گذارد: سینتکس، تست‌های واحد، سازگاری با Chromium 76، و یک تست کامل سرتاسری.</li>
+    <li><strong>حالت توسعه‌دهنده را روی تلویزیون فعال کنید.</strong> پنل اپ‌ها ← عدد 12345 را بزنید ← Developer mode را روشن کنید ← آی‌پی این دستگاه را به‌عنوان host تنظیم کنید ← تلویزیون را دوباره روشن کنید.</li>
+    <li><strong>نصبش کنید.</strong> <code>npm run install-tv</code> — تلویزیون را روی شبکه پیدا می‌کند، ویجت را می‌سازد و امضا می‌کند، و اجرایش می‌کند.</li>
+  </ol>
+  <p class="signing-note">برای پکیج کردن اپ به یک signing profile در Tizen Studio نیاز دارید؛ راهنمای کامل توی <a href="https://github.com/cocodedk/night-gallery#put-it-on-a-tv">فایل README مخزن</a> هست.</p>
+</section>
+</main>
+
+<footer><p>Apache-2.0 &nbsp;|&nbsp; © ۱۴۰۵ <a href="https://cocode.dk" target="_blank" rel="noreferrer">Cocode</a> &nbsp;|&nbsp; ساخته شده توسط <a href="https://linkedin.com/in/babakbandpey" target="_blank" rel="noreferrer">بابک بندپی</a></p></footer>
+
+</body>
+</html>

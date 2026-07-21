@@ -1,0 +1,25 @@
+# Normalize line endings everywhere; diff/merge as text unless overridden below.
+* text=auto eol=lf
+
+# Explicit text types (source, docs, config) — always LF, always diffable.
+*.js   text eol=lf
+*.mjs  text eol=lf
+*.css  text eol=lf
+*.html text eol=lf
+*.md   text eol=lf
+*.sh   text eol=lf
+*.xml  text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
+*.py   text eol=lf
+
+# Binary assets — no line-ending normalization, no text diff.
+# Note: .svg is intentionally NOT listed here — this repo's favicon/icons are
+# hand-written SVG markup and should stay diffable as text.
+*.png   binary
+*.jpg   binary
+*.ico   binary
+*.woff2 binary
+*.wgt   binary
+*.jar   binary
+*.zip   binary

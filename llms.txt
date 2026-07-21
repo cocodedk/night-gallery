@@ -1,0 +1,28 @@
+# Night Gallery
+
+> An ambient learning canvas for Samsung Tizen TVs: a serverless, fully
+> self-contained signed .wgt that shows one museum-style full-screen card at
+> a time — chess puzzles (solution reveals after 4 minutes), 585 concept
+> cards across 14 tags, and ambient light interludes — controlled entirely
+> by the TV remote.
+
+Night Gallery targets 2021 Tizen 6.0 TVs (Chromium 76 ceiling, enforced by a
+static guard). It has zero runtime dependencies; Playwright is the only
+devDependency, used for headless end-to-end tests. All content, fonts, and
+assets ship inside the widget — it runs with the TV's network unplugged. The
+app also runs unmodified in any desktop browser by opening
+`tizen/index.html` directly, no build step and no server required.
+
+## Docs
+
+- [README.md](README.md): overview, features, remote key mapping, how to try
+  it in a browser or install it on a TV.
+- [CLAUDE.md](CLAUDE.md): architecture, engineering constraints, and the
+  agent workflow used to build this repo.
+- [docs/CONTENT-INDEX.md](docs/CONTENT-INDEX.md): the full generated list of
+  every concept card and chess puzzle, by tag.
+- [CONTRIBUTING.md](CONTRIBUTING.md): local setup, test gates, how to add a
+  content card, and the Chromium-76 compatibility rule.
+- [English site](https://cocodedk.github.io/night-gallery/)
+- [Persian site](https://cocodedk.github.io/night-gallery/fa/)
+- [Live browser demo](https://cocodedk.github.io/night-gallery/demo/)
