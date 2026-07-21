@@ -1,0 +1,21 @@
+{
+  "name": "night-gallery",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Ambient learning canvas for a Samsung Tizen TV — serverless, self-contained .wgt",
+  "scripts": {
+    "smoke": "node scripts/smoke.js",
+    "content-index": "node scripts/content-index.js",
+    "test": "node tests/content.test.mjs && node tests/pool.test.mjs && node tests/fen.test.mjs && node tests/rotation.test.mjs",
+    "guard": "node scripts/es-guard.js",
+    "e2e": "node tests/e2e.mjs",
+    "check": "npm run smoke && npm run test && npm run guard && npm run e2e",
+    "install-tv": "bash scripts/install-tv.sh"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.1"
+  }
+}

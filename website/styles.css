@@ -1,0 +1,266 @@
+/* Night Gallery — public site stylesheet (shared by / and /fa/).
+   Design tokens match the TV app exactly (see tizen/css/base.css): ink,
+   vellum, brass, smoke, board-dark. Mobile-first; enhanced at 640/768/1024. */
+
+:root{
+  --ink:        #0C0A07;
+  --vellum:     #EAE3D2;
+  --brass:      #C6A15B;
+  --smoke:      #92897A;
+  --board-dark: #2C2721;
+  --display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --utility: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --header-h: 3.5rem;
+}
+
+/* Persian pages swap the whole page to Vazirmatn — Cormorant/Plex have no
+   Persian glyphs, so leaving them as first choice would silently fall back
+   to whatever the OS happens to ship. Tracking is reset too: letter-spacing
+   breaks the cursive joining of Arabic-script text. */
+[dir="rtl"]{
+  --display: 'Vazirmatn', 'IBM Plex Sans', system-ui, sans-serif;
+  --utility: 'Vazirmatn', system-ui, sans-serif;
+}
+
+/* The hero is a pixel-faithful recreation of the app screen, so it always
+   uses the app's own font stack and stays left-to-right — the product has
+   no RTL mode, and showing it any other way would misrepresent it. */
+.app-chrome, .app-chrome *, .card-stack, .card-stack *{
+  --display: 'Cormorant Garamond', Georgia, 'Times New Roman', 'Vazirmatn', serif;
+  --utility: 'IBM Plex Sans', 'Segoe UI', 'Vazirmatn', system-ui, sans-serif;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ font-size:100%; }
+@media (prefers-reduced-motion:no-preference){ html{ scroll-behavior:smooth; } }
+
+body{
+  background:var(--ink); color:var(--vellum);
+  font-family:var(--utility); font-weight:300;
+  line-height:1.6; font-size:1rem;
+  -webkit-font-smoothing:antialiased;
+}
+
+img,svg{ max-width:100%; display:block; }
+a{ color:inherit; }
+
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* ---------- header ---------- */
+.site-header{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+  gap:0.5rem 1.25rem; text-align:center;
+  min-height:var(--header-h);
+  max-width:64rem; margin-inline:auto;
+  padding:0.6rem 1.25rem;
+}
+@media (min-width:640px){
+  .site-header{ justify-content:space-between; text-align:start; flex-wrap:nowrap; }
+}
+.wordmark{
+  font-family:var(--display); font-weight:500; font-size:1.15rem;
+  color:var(--vellum); text-decoration:none; letter-spacing:0.02em;
+}
+.lang-switch{
+  font-family:var(--utility); font-weight:400; font-size:0.85rem;
+  letter-spacing:0.08em; color:var(--smoke);
+}
+.lang-switch a{
+  color:var(--smoke); text-decoration:none;
+  border-bottom:1px solid rgba(198,161,91,0.35); padding-bottom:0.15rem;
+  min-height:44px; display:inline-flex; align-items:center;
+}
+.lang-switch a:hover{ color:var(--brass); border-color:var(--brass); }
+.lang-switch [aria-current]{
+  color:var(--vellum); display:inline-flex; align-items:center; min-height:44px;
+}
+[dir="rtl"] .lang-switch{ letter-spacing:0; }
+
+/* ---------- hero / app recreation ---------- */
+.hero{
+  position:relative; overflow:hidden;
+  min-height:100vh; min-height:calc(100svh - var(--header-h));
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:2rem;
+  padding:2.5rem 1rem 2.25rem;
+}
+.hero::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 90% 75% at 50% 42%, rgba(198,161,91,0.06), transparent 65%),
+             radial-gradient(ellipse 120% 100% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%);
+}
+/* Decorative chrome only (frame / clock / progress line) — covers the full
+   hero independently of the centered card + caption group below, exactly
+   like the fixed-position chrome in the real app. */
+.app-chrome{ position:absolute; inset:0; }
+.app-frame{
+  position:absolute; top:clamp(0.6rem,2.4vw,1.6rem); right:clamp(0.6rem,2.4vw,1.6rem);
+  bottom:clamp(0.6rem,2.4vw,1.6rem); left:clamp(0.6rem,2.4vw,1.6rem);
+  border:1px solid rgba(198,161,91,0.42);
+}
+.app-frame::after{
+  content:''; position:absolute; top:0.4rem; right:0.4rem; bottom:0.4rem; left:0.4rem;
+  border:1px solid rgba(198,161,91,0.14);
+}
+.app-clock{
+  position:absolute; top:1.3rem; right:1.9rem;
+  font-family:var(--utility); font-weight:300; font-size:0.75rem;
+  letter-spacing:0.28em; color:var(--smoke);
+}
+.app-progress{ position:absolute; left:1.6rem; right:1.6rem; bottom:1.5rem; height:2px; }
+.app-progress-bar{
+  height:1px; margin-top:1px; width:8%;
+  background:linear-gradient(90deg, rgba(198,161,91,0.15), var(--brass));
+  animation:ngProgress 7s linear infinite;
+}
+@keyframes ngProgress{ 0%{ width:2%; } 100%{ width:100%; } }
+
+.card-stack{
+  position:relative; display:grid; width:100%;
+  max-width:38rem; margin-inline:auto;
+}
+.hero-card{
+  grid-area:1 / 1; display:flex; flex-direction:column; align-items:center;
+  text-align:center; padding-inline:0.75rem; opacity:0;
+  animation-name:ngCardFade4; animation-duration:28s; animation-iteration-count:infinite;
+}
+.hero-card:nth-child(1){ animation-delay:0s; }
+.hero-card:nth-child(2){ animation-delay:-7s; }
+.hero-card:nth-child(3){ animation-delay:-14s; }
+.hero-card:nth-child(4){ animation-delay:-21s; }
+/* five-sample rotation (the English hero leads with two Dansk cards) uses a
+   longer cycle so every card still holds the screen for ~7s */
+.card-stack--5 .hero-card{ animation-name:ngCardFade5; animation-duration:35s; }
+.card-stack--5 .hero-card:nth-child(5){ animation-delay:-28s; }
+@keyframes ngCardFade4{
+  0%{ opacity:0; } 2%{ opacity:1; } 23%{ opacity:1; } 25%{ opacity:0; } 100%{ opacity:0; }
+}
+@keyframes ngCardFade5{
+  0%{ opacity:0; } 1.6%{ opacity:1; } 18.4%{ opacity:1; } 20%{ opacity:0; } 100%{ opacity:0; }
+}
+.hero-card-eyebrow{
+  font-family:var(--utility); font-weight:400; font-size:0.68rem;
+  letter-spacing:0.4em; text-transform:uppercase; color:var(--brass);
+  margin-bottom:0.9rem;
+}
+.hero-card-title{
+  font-family:var(--display); font-weight:500; line-height:1.05;
+  font-size:clamp(1.8rem,7vw,3.2rem);
+}
+.hero-card-rule{ width:2.5rem; height:1px; background:var(--brass); opacity:0.7; margin:1.1rem auto; }
+.hero-card-body{
+  font-family:var(--display); font-weight:400; color:var(--vellum);
+  font-size:clamp(1rem,2.6vw,1.2rem); line-height:1.55; max-width:32rem;
+}
+.hero-card-body em{ color:var(--brass); font-style:italic; }
+
+.hero-caption{
+  position:relative; text-align:center;
+  max-width:24rem; font-family:var(--utility); font-weight:300;
+  font-size:0.85rem; letter-spacing:0.02em; color:var(--smoke);
+}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-card{ animation:none; }
+  .hero-card:not(:first-child){ display:none; }
+  .app-progress-bar{ animation:none; width:42%; }
+}
+
+/* ---------- shared section rhythm ---------- */
+.section{
+  max-width:44rem; margin-inline:auto; padding-inline:1.25rem;
+  padding-block:clamp(3rem,8vw,5rem);
+  border-top:1px solid rgba(198,161,91,0.18);
+}
+.section h2{
+  font-family:var(--display); font-weight:500; color:var(--vellum);
+  font-size:clamp(1.7rem,4.5vw,2.3rem); text-align:center;
+}
+.section > p.lede{
+  margin-top:0.9rem; text-align:center; color:var(--smoke);
+  font-family:var(--utility); font-size:0.95rem; letter-spacing:0.03em;
+}
+
+/* ---------- three functions ---------- */
+.functions{ list-style:none; margin-top:2.5rem; display:flex; flex-direction:column; gap:2.5rem; }
+.functions li{ text-align:center; }
+.functions h3{ font-family:var(--display); font-weight:500; font-size:1.4rem; margin-bottom:0.6rem; }
+.functions p{ font-family:var(--utility); font-weight:300; font-size:0.95rem; color:var(--smoke); max-width:24rem; margin-inline:auto; }
+
+/* ---------- the collection ---------- */
+.totals{
+  margin-top:0.9rem; text-align:center; font-family:var(--utility);
+  font-weight:400; letter-spacing:0.08em; color:var(--brass); font-size:0.85rem;
+}
+.totals--note{
+  margin-top:0.5rem; color:var(--smoke); font-weight:300; letter-spacing:0.02em;
+}
+[dir="rtl"] .totals{ letter-spacing:0; }
+.tags{
+  list-style:none; margin-top:2.5rem;
+  display:grid; grid-template-columns:repeat(2,1fr); gap:0;
+}
+.tags li{ text-align:center; padding:1.1rem 0.5rem; border-top:1px solid rgba(198,161,91,0.16); }
+.tag-name{ display:block; font-family:var(--display); font-weight:500; font-size:1.15rem; }
+.tag-count{
+  display:block; margin-top:0.3rem; font-family:var(--utility);
+  font-weight:300; font-size:0.75rem; letter-spacing:0.08em; color:var(--smoke);
+}
+[dir="rtl"] .tag-count{ letter-spacing:0; }
+
+/* ---------- see it now ---------- */
+.demo-cta{ text-align:center; margin-top:1.75rem; }
+.cta-link{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:44px; padding:0.85rem 2rem;
+  border:1px solid var(--brass); color:var(--vellum); text-decoration:none;
+  font-family:var(--utility); font-weight:400; font-size:0.85rem;
+  letter-spacing:0.12em; text-transform:uppercase;
+  transition:background-color .3s ease, color .3s ease;
+}
+.cta-link:hover{ background:var(--brass); color:var(--ink); }
+[dir="rtl"] .cta-link{ letter-spacing:0; text-transform:none; }
+.key-hint{
+  margin-top:1.25rem; text-align:center; font-family:var(--utility);
+  font-weight:300; font-size:0.78rem; letter-spacing:0.08em; color:var(--smoke);
+}
+[dir="rtl"] .key-hint{ letter-spacing:0; }
+
+/* ---------- put it on your tv ---------- */
+.steps{ margin-top:2rem; padding-inline-start:1.4rem; display:flex; flex-direction:column; gap:1.4rem; }
+/* Persian step numbers use native Persian-digit counters (۱ ۲ ۳ ۴) rather
+   than Western numerals — a real CSS3 predefined counter style, not a font
+   trick, so it stays a real ordered list. */
+.steps-persian{ list-style-type:persian; }
+.steps li{ font-family:var(--utility); font-weight:300; color:var(--vellum); font-size:0.95rem; padding-inline-start:0.35rem; }
+.steps li::marker{ font-family:var(--display); font-size:1.05rem; color:var(--brass); }
+.steps strong{ font-weight:500; color:var(--vellum); }
+.steps code, .signing-note code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:0.85em; background:rgba(198,161,91,0.1); padding:0.1em 0.4em; border-radius:2px;
+}
+.signing-note{ margin-top:1.75rem; color:var(--smoke); font-size:0.85rem; text-align:center; }
+.signing-note a{ color:var(--brass); }
+
+/* ---------- footer ---------- */
+footer{ border-top:1px solid rgba(198,161,91,0.18); padding:2rem 1.25rem 3rem; text-align:center; }
+footer p{ font-family:var(--utility); font-weight:300; font-size:0.8rem; color:var(--smoke); letter-spacing:0.02em; }
+footer a{ color:var(--smoke); text-decoration-color:rgba(146,137,122,0.4); text-underline-offset:0.2em; }
+footer a:hover{ color:var(--brass); }
+
+/* ---------- breakpoints ---------- */
+@media (min-width:640px){
+  .tags{ grid-template-columns:repeat(3,1fr); }
+}
+@media (min-width:768px){
+  .functions{ flex-direction:row; gap:0; }
+  .functions li{ flex:1; border-inline-start:1px solid rgba(198,161,91,0.18); padding-inline:1.75rem; }
+  .functions li:first-child{ border-inline-start:none; padding-inline-start:0; }
+}
+@media (min-width:1024px){
+  .tags{ grid-template-columns:repeat(4,1fr); }
+  .section{ max-width:52rem; }
+}

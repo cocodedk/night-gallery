@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  Keyword targeting (for future edits — remove if this drifts from the copy):
+  primary:   ambient learning app for TV
+  secondary: self-hosted Tizen screensaver, offline chess puzzle screensaver for Samsung TV
+  intent:    informational / project discovery — someone deciding whether to put an
+             open-source ambient display on a Samsung TV, or a developer evaluating
+             the Tizen implementation before cloning it.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Night Gallery — an ambient learning canvas for your TV</title>
+<meta name="description" content="A screen that teaches without asking for attention: chess puzzles, 585 concept cards, fourteen subjects, and slow ambient light. Free, open source, offline.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cocodedk.github.io/night-gallery/">
+
+<link rel="alternate" hreflang="en" href="https://cocodedk.github.io/night-gallery/">
+<link rel="alternate" hreflang="da" href="https://cocodedk.github.io/night-gallery/da/">
+<link rel="alternate" hreflang="fa" href="https://cocodedk.github.io/night-gallery/fa/">
+<link rel="alternate" hreflang="x-default" href="https://cocodedk.github.io/night-gallery/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Night Gallery">
+<meta property="og:title" content="Night Gallery — an ambient learning canvas for your TV">
+<meta property="og:description" content="A screen that teaches without asking for attention: chess puzzles, 585 concept cards, fourteen subjects, and slow ambient light. Free, open source, offline.">
+<meta property="og:url" content="https://cocodedk.github.io/night-gallery/">
+<meta property="og:image" content="https://cocodedk.github.io/night-gallery/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Night Gallery — a museum-black card with a gilded frame and a brass knight glyph">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="da_DK">
+<meta property="og:locale:alternate" content="fa_IR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Night Gallery — an ambient learning canvas for your TV">
+<meta name="twitter:description" content="A screen that teaches without asking for attention: chess puzzles, 585 concept cards, fourteen subjects, and slow ambient light. Free, open source, offline.">
+<meta name="twitter:image" content="https://cocodedk.github.io/night-gallery/og.png">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Night Gallery",
+  "description": "An ambient learning canvas for a Samsung Tizen TV: a chess puzzle, a concept card from a 585-card library across fourteen subjects, or a slow ambient light interlude, one full-screen card at a time. Serverless, self-contained, and free.",
+  "url": "https://cocodedk.github.io/night-gallery/",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Tizen, Web",
+  "inLanguage": "en",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": {
+    "@type": "Person",
+    "name": "Babak Bandpey",
+    "url": "https://cocode.dk",
+    "sameAs": ["https://linkedin.com/in/babakbandpey", "https://github.com/cocodedk"]
+  },
+  "codeRepository": "https://github.com/cocodedk/night-gallery"
+}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="wordmark" href="/night-gallery/">Night Gallery</a>
+  <nav class="lang-switch" aria-label="Language">
+    <span aria-current="page">English</span> ·
+    <a href="da/" hreflang="da" lang="da">Dansk</a> ·
+    <a href="fa/" hreflang="fa" lang="fa">فارسی</a>
+  </nav>
+</header>
+
+<main>
+<h1 class="sr-only">Night Gallery — an ambient learning canvas for your TV</h1>
+
+<section class="hero" aria-label="A recreation of the app screen">
+  <div class="app-chrome" dir="ltr" aria-hidden="true">
+    <div class="app-frame"></div>
+    <div class="app-clock">21:47</div>
+    <div class="app-progress"><div class="app-progress-bar"></div></div>
+  </div>
+  <div class="card-stack card-stack--5" dir="ltr" aria-hidden="true">
+      <article class="hero-card">
+        <p class="hero-card-eyebrow">Dansk</p>
+        <p class="hero-card-title">Overskud</p>
+        <div class="hero-card-rule"></div>
+        <p class="hero-card-body">Literally &ldquo;surplus&rdquo; — the spare mental energy to be patient, generous, or playful. You don&rsquo;t <em>find</em> time for people; you need overskud for them.</p>
+      </article>
+      <article class="hero-card">
+        <p class="hero-card-eyebrow">Dansk</p>
+        <p class="hero-card-title">Pyt</p>
+        <div class="hero-card-rule"></div>
+        <p class="hero-card-body">A tiny word for letting small annoyances go — Danish schools even keep a physical <em>pyt-knap</em> to press. Not resignation; a decision that this one is not worth your overskud.</p>
+      </article>
+      <article class="hero-card">
+        <p class="hero-card-eyebrow">Latin</p>
+        <p class="hero-card-title">Festina lente</p>
+        <div class="hero-card-rule"></div>
+        <p class="hero-card-body">&ldquo;Make haste slowly.&rdquo; Suetonius records it as Augustus&rsquo;s favourite saying — the emperor&rsquo;s reminder that speed without care is just a faster way to fail.</p>
+      </article>
+      <article class="hero-card">
+        <p class="hero-card-eyebrow">Chess</p>
+        <p class="hero-card-title">Zugzwang</p>
+        <div class="hero-card-rule"></div>
+        <p class="hero-card-body">A position where every legal move makes things worse — the obligation to act becomes the losing condition. German for &ldquo;compulsion to move.&rdquo;</p>
+      </article>
+      <article class="hero-card">
+        <p class="hero-card-eyebrow">Thinking</p>
+        <p class="hero-card-title">Chesterton&rsquo;s fence</p>
+        <div class="hero-card-rule"></div>
+        <p class="hero-card-body">Never remove a fence until you know why it was put up. Reforms made in ignorance of a rule&rsquo;s purpose tend to rediscover that purpose the hard way.</p>
+      </article>
+  </div>
+  <p class="hero-caption">This is the app. It looks exactly like this on the wall.</p>
+</section>
+
+<section class="section" aria-label="What it does">
+  <h2>Three functions, always</h2>
+  <ul class="functions">
+    <li>
+      <h3>Teach</h3>
+      <p>A chess puzzle to sit with between tasks — its solution stays hidden until later. A concept card drawn from a library of 585, spanning fourteen subjects, one at a time.</p>
+    </li>
+    <li>
+      <h3>Run in the background</h3>
+      <p>Nothing to click, nothing that needs an answer. The rotation moves on its own, quietly, whether or not anyone is in the room.</p>
+    </li>
+    <li>
+      <h3>Make the room beautiful</h3>
+      <p>Every card is decor first, lesson second. Between them, slow ambient light lets the room breathe.</p>
+    </li>
+  </ul>
+</section>
+
+<section class="section" id="collection" aria-label="The card library">
+  <h2>The collection</h2>
+  <p class="totals">585 cards, seven chess puzzles, fourteen tags.</p>
+  <p class="totals totals--note">Including sixty Danish words, idioms and institutions — from overskud to fjumreår.</p>
+  <ul class="tags">
+    <li><span class="tag-name">Dansk</span><span class="tag-count">60</span></li>
+    <li><span class="tag-name">Systems</span><span class="tag-count">50</span></li>
+    <li><span class="tag-name">Electronics</span><span class="tag-count">50</span></li>
+    <li><span class="tag-name">Chess</span><span class="tag-count">50</span></li>
+    <li><span class="tag-name">Geography</span><span class="tag-count">45</span></li>
+    <li><span class="tag-name">Farsi</span><span class="tag-count">35</span></li>
+    <li><span class="tag-name">Latin</span><span class="tag-count">35</span></li>
+    <li><span class="tag-name">Sun Tzu</span><span class="tag-count">25</span></li>
+    <li><span class="tag-name">Math</span><span class="tag-count">45</span></li>
+    <li><span class="tag-name">Physics</span><span class="tag-count">35</span></li>
+    <li><span class="tag-name">Design</span><span class="tag-count">30</span></li>
+    <li><span class="tag-name">History</span><span class="tag-count">25</span></li>
+    <li><span class="tag-name">Security</span><span class="tag-count">50</span></li>
+    <li><span class="tag-name">Thinking</span><span class="tag-count">50</span></li>
+  </ul>
+</section>
+
+<section class="section" aria-label="Try the live demo">
+  <h2>See it now</h2>
+  <p class="lede">Open the gallery in your browser — the same file that runs on the TV.</p>
+  <p class="demo-cta"><a class="cta-link" href="demo/">Open the gallery</a></p>
+  <p class="key-hint">→ next card &nbsp;·&nbsp; ← previous card &nbsp;·&nbsp; OK pause</p>
+</section>
+
+<section class="section" aria-label="Install on a Samsung TV">
+  <h2>Put it on your TV</h2>
+  <ol class="steps">
+    <li><strong>Clone the repository.</strong> <code>git clone https://github.com/cocodedk/night-gallery.git</code></li>
+    <li><strong>Run the checks.</strong> <code>npm run check</code> — the same syntax, unit, compatibility and end-to-end gates the project runs before any install of its own.</li>
+    <li><strong>Put the TV in developer mode.</strong> Apps panel → type 12345 → toggle Developer mode on → set this machine&rsquo;s IP as the host → reboot the TV.</li>
+    <li><strong>Install it.</strong> <code>npm run install-tv</code> — finds the TV on the network, packages and signs the widget, installs it, and launches it.</li>
+  </ol>
+  <p class="signing-note">Packaging requires a Tizen Studio signing profile of your own — see the <a href="https://github.com/cocodedk/night-gallery#put-it-on-a-tv">repository README</a> for the full setup.</p>
+</section>
+</main>
+
+<footer><p>Apache-2.0 &nbsp;|&nbsp; © 2026 <a href="https://cocode.dk" target="_blank" rel="noreferrer">Cocode</a> &nbsp;|&nbsp; Created by <a href="https://linkedin.com/in/babakbandpey" target="_blank" rel="noreferrer">Babak Bandpey</a></p></footer>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+# Tizen build/signing artifacts
+*.wgt
+.buildResult/
+author-signature.xml
+signature*.xml
+.manifest.tmp
+
+# Node
+node_modules/

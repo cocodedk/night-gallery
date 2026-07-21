@@ -1,0 +1,16 @@
+/* Debug overlay (#debug in index.html) — not part of the desktop prototype;
+   added for on-TV diagnostics (see NG.debug in js/debug.js, a peer module).
+   Toggled visible/hidden via the shared .hidden{display:none} in base.css. */
+#debug{
+  position:fixed; top:2.4vmin; right:2.4vmin; z-index:9;
+  max-width:46vmin; max-height:70vh; overflow:auto;
+  background:rgba(12,10,7,0.88);
+  border:1px solid rgba(198,161,91,0.4);
+  border-radius:4px;
+  padding:1.6vmin 2vmin;
+  font-family:var(--utility); font-weight:300;
+  font-size:1.5vmin; line-height:1.6;
+  color:var(--vellum);
+  white-space:pre-wrap;
+  word-break:break-word;
+}
