@@ -12,13 +12,28 @@ const url = 'file://' + path.join(__dirname, '..', 'tizen', 'index.html');
 
 // Self-contained page-side predicates for page.waitForFunction — must not
 // close over any outer-scope variable, they run inside the browser.
+// Scoped to '.stage.visible' because both card types draw a '.board': during
+// the 1.6s crossfade the outgoing card is still in the DOM, so an unscoped
+// query can match the card being replaced. A puzzle is the board that carries
+// a '.solution'; a position card is the board that carries a '.caption .lede'.
 function boardReady() {
-  const board = document.querySelector('.board');
-  if (!board) { return false; }
+  const stage = document.querySelector('.stage.visible');
+  if (!stage) { return false; }
+  const board = stage.querySelector('.board');
+  if (!board || !stage.querySelector('.solution')) { return false; }
   return board.querySelectorAll('.sq').length === 64 && board.querySelectorAll('.pc').length >= 1;
 }
+function positionReady() {
+  const stage = document.querySelector('.stage.visible');
+  if (!stage) { return false; }
+  const board = stage.querySelector('.board');
+  const lede = stage.querySelector('.caption .lede');
+  if (!board || !lede || stage.querySelector('.solution')) { return false; }
+  return board.querySelectorAll('.sq').length === 64 && lede.textContent.trim().length > 0;
+}
 function solutionShown() {
-  const sol = document.querySelector('.solution');
+  const stage = document.querySelector('.stage.visible');
+  const sol = stage && stage.querySelector('.solution');
   return !!(sol && sol.classList.contains('shown'));
 }
 function conceptReady() {
@@ -58,6 +73,8 @@ async function main() {
 
     await pressKey(page, 39);
     await expectSoon(page, conceptReady, 'next (39) -> concept card with non-empty .concept-title', assertTrue, 3000);
+    await pressKey(page, 39);
+    await expectSoon(page, positionReady, 'next (39) -> position card (board + caption lede, no solution)', assertTrue, 3000);
     await pressKey(page, 39);
     await pressKey(page, 39);
     await expectSoon(page, ambientReady, 'next (39) x2 more -> ambient canvas.ambient-canvas', assertTrue, 3000);

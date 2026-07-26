@@ -2,14 +2,14 @@
 
 > An ambient learning canvas for Samsung Tizen TVs: a serverless, fully
 > self-contained signed .wgt that shows one museum-style full-screen card at
-> a time — chess puzzles (solution reveals after 4 minutes), 585 concept
-> cards across 14 tags, and ambient light interludes — controlled entirely
-> by the TV remote.
+> a time, controlled entirely by the TV remote: chess puzzles (solution
+> reveals after 4 minutes), 585 concept cards across 14 tags, and ambient
+> light interludes.
 
 Night Gallery targets 2021 Tizen 6.0 TVs (Chromium 76 ceiling, enforced by a
 static guard). It has zero runtime dependencies; Playwright is the only
 devDependency, used for headless end-to-end tests. All content, fonts, and
-assets ship inside the widget — it runs with the TV's network unplugged. The
+assets ship inside the widget: it runs with the TV's network unplugged. The
 app also runs unmodified in any desktop browser by opening
 `tizen/index.html` directly, no build step and no server required.
 
