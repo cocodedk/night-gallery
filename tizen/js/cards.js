@@ -46,6 +46,41 @@ NG.cardPuzzle = function cardPuzzle() {
   };
 };
 
+// Diagram-only card: a board plus one museum caption, nothing to solve.
+NG.cardPosition = function cardPosition() {
+  if (!NG.draws.position) { NG.draws.position = NG.pool(NG.POSITIONS); }
+  const p = NG.draws.position();
+
+  const node = document.createElement('div');
+  node.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
+
+  const eyebrow = document.createElement('div');
+  eyebrow.className = 'eyebrow';
+  eyebrow.innerHTML = 'Board <span class="dim">·</span> ' + p.kind;
+
+  const caption = document.createElement('div');
+  caption.className = 'caption';
+  const lede = document.createElement('div');
+  lede.className = 'lede';
+  lede.textContent = p.title;
+  const sub = document.createElement('div');
+  sub.className = 'sub';
+  sub.textContent = p.note;
+  const side = document.createElement('div');
+  side.className = 'sub';
+  const toMove = p.fen.split(' ')[1] === 'b' ? 'Black' : 'White';
+  side.textContent = toMove + ' to move';
+  caption.appendChild(lede);
+  caption.appendChild(sub);
+  caption.appendChild(side);
+
+  node.appendChild(eyebrow);
+  node.appendChild(NG.buildBoard(p.fen, { flip: p.flip, marks: p.marks }));
+  node.appendChild(caption);
+
+  return { node: node, duration: 180 };
+};
+
 NG.cardConcept = function cardConcept() {
   if (!NG.draws.concept) { NG.draws.concept = NG.pool(NG.CONCEPTS); }
   const c = NG.draws.concept();

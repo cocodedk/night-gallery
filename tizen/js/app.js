@@ -21,7 +21,10 @@ document.addEventListener('DOMContentLoaded', function () {
     NG.debug.state.screensaver = 'unavailable: ' + e.message;
   }
 
-  var sequence = [NG.cardPuzzle, NG.cardConcept, NG.cardConcept, NG.cardAmbient];
+  // 15-minute cycle: a board is on screen for eight of those minutes (the
+  // puzzle's five plus the position card's three), concepts and ambient
+  // light fill the rest.
+  var sequence = [NG.cardPuzzle, NG.cardConcept, NG.cardPosition, NG.cardConcept, NG.cardAmbient];
   var rotation = NG.createRotation({ length: sequence.length, now: function () { return performance.now(); } });
   var stage = NG.createStage();
   var bar = document.getElementById('bar');

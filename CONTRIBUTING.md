@@ -1,6 +1,6 @@
 # Contributing to Night Gallery
 
-Night Gallery is a serverless, self-contained Tizen TV app — no framework,
+Night Gallery is a serverless, self-contained Tizen TV app: no framework,
 no build step, no backend. Contributions that keep it that way are welcome.
 
 ## Local setup
@@ -22,10 +22,10 @@ bash scripts/install-hooks.sh
 
 This points git at the versioned hooks in `.githooks/` for this clone:
 
-- **pre-commit** — runs `npm run smoke`, `npm test`, `npm run guard`, and
+- **pre-commit**: runs `npm run smoke`, `npm test`, `npm run guard`, and
   checks `docs/CONTENT-INDEX.md` isn't stale.
-- **commit-msg** — enforces [Conventional Commits](https://www.conventionalcommits.org/).
-- **pre-push** — locks pushes to `cocodedk/*` remotes, blocks force-pushes
+- **commit-msg**: enforces [Conventional Commits](https://www.conventionalcommits.org/).
+- **pre-push**: locks pushes to `cocodedk/*` remotes, blocks force-pushes
   and deletion of protected branches, and re-runs the smoke check.
 
 ## Build/test commands
@@ -57,8 +57,8 @@ Style rules for card text:
 - 1–2 sentences, 15–45 words total.
 - At most one `<em>` per card.
 - Curly quotes (`’ “ ”`), not straight ones.
-- No `?.` or `??` sequences anywhere in the string — `npm run guard` scans
-  card text along with code, since these are Chromium-76-unsupported syntax
+- No `?.` or `??` sequences anywhere in the string. `npm run guard` scans
+  card text along with code, since these are Chromium-76-unsupported syntax,
   and a stray one in a string can still trip a naive scanner or, worse, get
   copy-pasted into real code later.
 - State only what you can verify. If you can't confirm a fact, cut it or
@@ -70,23 +70,23 @@ After adding or editing a card:
 npm run content-index
 ```
 
-and stage the regenerated `docs/CONTENT-INDEX.md` along with your change —
-pre-commit fails if the index is stale, and it must never be hand-edited.
+and stage the regenerated `docs/CONTENT-INDEX.md` along with your change.
+Pre-commit fails if the index is stale, and it must never be hand-edited.
 
 ## The Chromium-76 rule
 
 The target TV (2021 Tizen 6.0) is frozen on Chromium 76 forever. Before using
 any new CSS or JS feature, check it against
 [caniuse.com](https://caniuse.com) for Chrome 76 support. `npm run guard` is
-the enforced gate — it fails the build on `?.`, `??`, `inset:` shorthand,
+the enforced gate: it fails the build on `?.`, `??`, `inset:` shorthand,
 flex `gap`, `clamp()/min()/max()`, `aspect-ratio`, `:focus-visible`, `@import`,
 and a few others. If `guard` passes, you're clear; if it's close, don't rely
-on judgment — look it up.
+on judgment. Look it up.
 
 ## File size
 
 200 lines max per code file (`.js`, `.mjs`, `.css`, `.html`, `.sh`).
-Markdown is exempt. Split by concern, not by line-count games — a tag's
+Markdown is exempt. Split by concern, not by line-count games: a tag's
 content file splits into `<tag>-2.js`, a module splits along a natural
 boundary.
 

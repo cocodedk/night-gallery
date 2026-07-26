@@ -98,6 +98,7 @@ function scanDir(absDir, ext, rules) {
 
 scanDir(path.join(REPO_ROOT, 'tizen', 'js'), '.js', JS_RULES);
 scanDir(path.join(REPO_ROOT, 'tizen', 'js', 'content'), '.js', JS_RULES);
+scanDir(path.join(REPO_ROOT, 'tizen', 'js', 'chess'), '.js', JS_RULES);
 scanDir(path.join(REPO_ROOT, 'tizen', 'css'), '.css', CSS_RULES);
 // index.html gets both rule sets applied to the whole file (script content
 // and any inline/embedded CSS) — dumb and strict, per design.

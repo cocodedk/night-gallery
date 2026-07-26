@@ -3,11 +3,11 @@
 ![CI](https://github.com/cocodedk/night-gallery/actions/workflows/ci.yml/badge.svg)
 
 An ambient learning canvas for Samsung Tizen TVs. It shows one museum-style
-full-screen card at a time — a chess puzzle whose solution reveals after four
-minutes, or a concept card from a 585-card library — with quiet ambient light
-interludes between them. It teaches in glances, runs in the background
-without asking for attention, and is styled to make the room it's in look
-better, not busier.
+full-screen card at a time: a chess puzzle whose solution reveals after four
+minutes, a framed position from a famous game, or a concept card from a
+585-card library, with quiet ambient light interludes between them. It
+teaches in glances, runs in the background without asking for attention, and
+is styled to make the room it's in look better, not busier.
 
 ![A chess puzzle card](docs/media/puzzle.png)
 ![A concept card](docs/media/concept.png)
@@ -15,17 +15,25 @@ better, not busier.
 ## Website
 
 - [English](https://cocodedk.github.io/night-gallery/)
+- [Dansk (Danish)](https://cocodedk.github.io/night-gallery/da/)
 - [فارسی (Persian)](https://cocodedk.github.io/night-gallery/fa/)
 - [Live demo in your browser](https://cocodedk.github.io/night-gallery/demo/)
 
 ## Features
 
-- **Glanceable cards.** One card fills the screen at a time — no menus, no
+- **Glanceable cards.** One card fills the screen at a time: no menus, no
   clutter, nothing competing for attention while you're not looking at it.
 - **585 concept cards across 14 tags**: Systems, Electronics, Chess,
   Geography, Dansk, Farsi, Latin, Sun Tzu, Math, Physics, Design, History,
-  Security, Thinking — plus 7 verified checkmate patterns for the puzzle
-  channel.
+  Security, Thinking.
+- **180 chess boards**: 121 puzzles (57 mate in 1, 41 mate in 2, 23 mate in 3,
+  either side to move) and 59 position cards (openings, moments from famous
+  games, endgames and studies) shown as a diagram with one line of wall text
+  and gilded key squares.
+- **Every puzzle machine-verified.** A legal-move engine in the test suite,
+  proven against standard perft vectors, checks that each puzzle has exactly
+  one solution, hides no shorter mate, and prints a line that is legal to the
+  last ply. It runs on every commit.
 - **Offline by design.** The whole app, including fonts, ships inside a
   single signed `.wgt`. It runs with the TV's network unplugged.
 - **Museum aesthetic.** Deep warm black, a gilded hairline frame, large serif
@@ -33,7 +41,7 @@ better, not busier.
 - **Bundled fonts**, including Persian (Vazirmatn) and dedicated chess piece
   glyphs, so nothing depends on a font the TV happens to have installed.
 - **On-device debug overlay** (BLUE key) reporting build stamp, font load
-  results, frame rate, and the last keys received — built for a device with
+  results, frame rate, and the last keys received, built for a device with
   no remote DevTools.
 
 Remote mapping:
@@ -49,7 +57,7 @@ Remote mapping:
 ## Try it
 
 Open the [live demo](https://cocodedk.github.io/night-gallery/demo/), or
-clone the repo and open `tizen/index.html` in any browser — no build step,
+clone the repo and open `tizen/index.html` in any browser: no build step,
 no server. Keys: → / ← next/back, Space or OK pause, S or RED reveal the
 puzzle solution, D or BLUE toggle the debug overlay.
 
@@ -59,7 +67,7 @@ Prerequisites: the
 [Tizen Studio CLI](https://developer.samsung.com/smarttv/develop/getting-started/setting-up-sdk/installing-tv-sdk.html)
 with a signing profile, and a TV in developer mode.
 
-There's nothing to install for the app itself — it has zero runtime
+There's nothing to install for the app itself: it has zero runtime
 dependencies. To sideload it:
 
 1. On the TV: Apps panel → type `12345` → toggle Developer mode on → set
@@ -82,36 +90,44 @@ bash scripts/install-hooks.sh   # one-time: activate git hooks for this clone
 ```
 
 `npm run check` runs four gates: a syntax smoke pass over every `tizen/js`
-file, unit tests for the pure logic, a static guard that fails on any
-Chromium-76-unsupported CSS/JS feature, and a Playwright end-to-end pass at
-1920×1080.
+file, unit tests for the pure logic (including the chess engine that verifies
+every puzzle), a static guard that fails on any Chromium-76-unsupported CSS/JS
+feature, and a Playwright end-to-end pass at 1920×1080.
 
-Adding a card is a one-line addition to the matching tag file under
-`tizen/js/content/<tag>.js`. See `docs/CONTENT-INDEX.md` for every existing
-card — it's generated, so run `npm run content-index` after adding one.
+Adding a concept card is a one-line addition to the matching tag file under
+`tizen/js/content/<tag>.js`. Adding a chess puzzle is a one-line addition
+under `tizen/js/chess/`, and the gate will tell you if it is unsound:
+
+```bash
+node tests/chess.test.mjs --only mate2-a.js   # verify one set while editing it
+```
+
+See `docs/CONTENT-INDEX.md` for every existing card. It's generated, so run
+`npm run content-index` after adding one.
 
 ## Architecture
 
 ```
 tizen/
   index.html
-  js/            rotation engine, key handling, rendering — one concern
+  js/            rotation engine, key handling, rendering: one concern
                  per file, ≤200 lines each
   js/content/    one file per tag (concept card data)
+  js/chess/      one file per set (puzzles and position cards)
   css/           layout, card styles, debug overlay
   fonts/         bundled woff2 (see fonts/LICENSES.md)
 scripts/         guard, packaging, install, content-index tooling
 tests/           unit tests + Playwright e2e
 ```
 
-Every card — puzzle, concept, or ambient — is the same small contract:
+Every card (puzzle, position, concept, or ambient) is the same small contract:
 `{ node, duration, onEnter, onExit, reveal }`. The rotation engine that walks
 through them is pure and takes an injected clock, so the whole sequencing
 logic is testable headless in Node, with no browser and no TV required.
 
 ## Author
 
-**Babak Bandpey** — [cocode.dk](https://cocode.dk) |
+**Babak Bandpey** | [cocode.dk](https://cocode.dk) |
 [LinkedIn](https://linkedin.com/in/babakbandpey) |
 [GitHub](https://github.com/cocodedk)
 
@@ -120,5 +136,5 @@ logic is testable headless in Node, with no browser and no TV required.
 Apache-2.0 | © 2026 [Cocode](https://cocode.dk) | Created by
 [Babak Bandpey](https://linkedin.com/in/babakbandpey)
 
-Bundled fonts carry their own licenses — see
+Bundled fonts carry their own licenses. See
 [`tizen/fonts/LICENSES.md`](tizen/fonts/LICENSES.md).

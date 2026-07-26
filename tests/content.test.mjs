@@ -1,17 +1,26 @@
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
-import { readdirSync } from 'node:fs';
+import { readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const require = createRequire(import.meta.url);
-const { PUZZLES, CONCEPTS, AMBIENT_WORDS } = require('../tizen/js/content.js');
+const { PUZZLES, POSITIONS, CONCEPTS, AMBIENT_WORDS } = require('../tizen/js/content.js');
 const { fenToGrid } = require('../tizen/js/fen.js');
 
 // Tag files push into the CONCEPTS array exported above.
 const contentDir = fileURLToPath(new URL('../tizen/js/content/', import.meta.url));
 for (const f of readdirSync(contentDir).sort()) {
   if (f.endsWith('.js')) { require(path.join(contentDir, f)); }
+}
+
+// Chess set files push into PUZZLES / POSITIONS, exported above. Tolerate
+// the directory not existing yet (pre-assembly layout).
+const chessDir = fileURLToPath(new URL('../tizen/js/chess/', import.meta.url));
+if (existsSync(chessDir)) {
+  for (const f of readdirSync(chessDir).sort()) {
+    if (f.endsWith('.js')) { require(path.join(chessDir, f)); }
+  }
 }
 
 let n = 0;
@@ -27,7 +36,8 @@ const EXPECTED_TAGS = {
   'Sun Tzu': 25, Systems: 50, Thinking: 50
 };
 const EXPECTED_TOTAL = Object.values(EXPECTED_TAGS).reduce((a, b) => a + b, 0);
-check(Array.isArray(PUZZLES) && PUZZLES.length === 7, 'PUZZLES has 7 entries');
+check(Array.isArray(PUZZLES) && PUZZLES.length === 121, `PUZZLES has 121 entries (got ${PUZZLES.length})`);
+check(Array.isArray(POSITIONS) && POSITIONS.length === 59, `POSITIONS has 59 entries (got ${POSITIONS.length})`);
 check(Array.isArray(CONCEPTS) && CONCEPTS.length === EXPECTED_TOTAL, `CONCEPTS has ${EXPECTED_TOTAL} entries (got ${CONCEPTS.length})`);
 check(Array.isArray(AMBIENT_WORDS) && AMBIENT_WORDS.length === 6, 'AMBIENT_WORDS has 6 entries');
 
@@ -71,8 +81,18 @@ for (const [i, p] of PUZZLES.entries()) {
   check(kings === 1, `puzzle[${i}] has exactly one 'K'`);
   check(blackKings === 1, `puzzle[${i}] has exactly one 'k'`);
 
+  // Either side may be to move — the app flips the board for black-to-move
+  // puzzles. Soundness (legality, unique key, the printed line) is verified
+  // against the engine in tests/chess.test.mjs; this file checks shape only.
   const fields = p.fen.split(' ');
-  check(fields.length >= 2 && fields[1] === 'w', `puzzle[${i}] side-to-move field is 'w'`);
+  check(fields.length >= 2 && (fields[1] === 'w' || fields[1] === 'b'), `puzzle[${i}] side-to-move field is 'w' or 'b'`);
+}
+
+// --- positions (diagram-only cards; zero for now, peer agents fill these) ---
+for (const [i, p] of POSITIONS.entries()) {
+  check(typeof p.kind === 'string' && p.kind.length > 0, `position[${i}].kind is non-empty string`);
+  check(typeof p.title === 'string' && p.title.length > 0, `position[${i}].title is non-empty string`);
+  check(typeof p.note === 'string' && p.note.length > 0, `position[${i}].note is non-empty string`);
 }
 
 // --- concepts (structure) ---

@@ -46,18 +46,24 @@ There is **no app code yet**. The reference implementation is
 prototype. It defines the aesthetic, content, and rotation mechanics; port it,
 don't reinvent it. Its anatomy:
 
-- **Content pools**: `PUZZLES` (7 FEN mate-in-1/2 positions + notes) and
-  `AMBIENT_WORDS` live in `js/content.js`; `CONCEPTS` (585 tagged cards) is
-  filled by one file per tag under `js/content/` (14 tags — Dansk, Farsi,
-  Chess, Latin, Sun Tzu, Math, …). Each pool draws via `pool()`, a reshuffling
-  no-repeat bag. `docs/CONTENT-INDEX.md` lists every card (generated —
-  `npm run content-index`).
-- **Card makers** (`cardPuzzle` / `cardConcept` / `cardAmbient`) each return
-  `{ node, duration, onEnter?, onExit?, reveal? }` — the whole card contract.
-- **Rotation engine**: `SEQUENCE = [puzzle, concept, concept, ambient]`
-  (300s / 150s / 150s / 120s), two fixed stages crossfaded for transitions,
-  history for back-navigation, rAF-driven progress bar, corner clock,
-  cursor auto-hide. Puzzle solutions auto-reveal after 240s.
+- **Content pools**: `js/content.js` holds only `AMBIENT_WORDS` and the empty
+  array inits. `CONCEPTS` (585 tagged cards) is filled by one file per tag
+  under `js/content/` (14 tags — Dansk, Farsi, Chess, Latin, Sun Tzu, Math,
+  …). `PUZZLES` (121 mate-in-1/2/3, either side to move) and `POSITIONS`
+  (59 diagram-only cards: openings, classic games, endgames and studies) are
+  filled one file per set under `js/chess/`. Each pool draws via `pool()`, a
+  reshuffling no-repeat bag. `docs/CONTENT-INDEX.md` lists every card
+  (generated — `npm run content-index`).
+- **Card makers** (`cardPuzzle` / `cardConcept` / `cardPosition` /
+  `cardAmbient`) each return `{ node, duration, onEnter?, onExit?, reveal? }`
+  — the whole card contract. `buildBoard(fen, opts)` renders both board card
+  types; `opts.flip` draws from Black's side (automatic for black-to-move
+  puzzles), `opts.marks` gilds key squares.
+- **Rotation engine**: `SEQUENCE = [puzzle, concept, position, concept,
+  ambient]` (300s / 150s / 180s / 150s / 120s), two fixed stages crossfaded
+  for transitions, history for back-navigation, rAF-driven progress bar,
+  corner clock, cursor auto-hide. Puzzle solutions auto-reveal after 240s.
+  A board is on screen eight minutes of every fifteen.
 
 ## Target hardware (hard constraints)
 
@@ -142,7 +148,12 @@ order (`npm run check` runs G1–G4):
 - **G1 `npm run smoke`** — `node --check` syntax pass over every `tizen/js`
   file.
 - **G2 `npm run test`** — unit tests for the pure logic (content data, FEN,
-  pools, rotation engine with a fake clock).
+  pools, rotation engine with a fake clock), plus the **chess gate**: a
+  legal-move engine in `tests/chess/` (proven by perft vectors) verifies every
+  shipped puzzle has exactly one key move, hides no shorter mate, and prints a
+  solution line that is legal to the last ply. Hand-authored puzzles are
+  unsound far more often than they look — this gate found three bad ones among
+  the original seven. Never weaken it to make a puzzle fit; fix the puzzle.
 - **G3 `npm run guard`** — static scan that fails on any Chromium-76-unsupported
   feature (`?.`, `??`, `inset:`, `gap:`, `clamp()/min()/max()`, `aspect-ratio`,
   `:focus-visible`, `@import`). This gate exists because these break silently,
@@ -208,7 +219,9 @@ Versioned in `.githooks/`; activate once per clone with
   docs are allowed to be long. The prototype is one 519-line file; the port
   splits it (content data / card makers / rotation engine / platform glue).
   Card data lives one file per tag under `tizen/js/content/`; a tag that
-  outgrows the cap splits into `<tag>-2.js`, never into per-card files.
+  outgrows the cap splits into `<tag>-2.js`, never into per-card files. Chess
+  data follows the same rule, one file per set under `tizen/js/chess/`
+  (`mate1-a.js`, `mate2-c.js`, `pos-endgames.js`, …).
 - **TDD for logic.** FEN→board parsing, the pool/shuffle, and the rotation
   engine are pure and testable headless in Node; write those tests first.
 - **DRY / KISS / YAGNI.** No speculative abstraction; the card contract
@@ -224,8 +237,11 @@ Versioned in `.githooks/`; activate once per clone with
 - [x] Scaffold `tizen/` (config.xml, index.html, css/, js/, icon.png) from the
       prototype, applying the prototype→TV fixes above (2026-07-21; all four
       gates green, adversarially reviewed)
-- [ ] Package/sign/install on the TV via the BabakTV profile; verify fonts and
-      chess glyphs on-device
+- [x] Package/sign/install on the TV via the BabakTV profile; verify fonts and
+      chess glyphs on-device (b01–b04)
+- [x] More chess boards (2026-07-26, b05): 7 → 121 verified puzzles, a new
+      59-card position channel, board flip + gilded key squares, and a
+      perft-proven mate solver as a permanent test gate
 - [ ] Optional: Lichess daily-puzzle fetch, direct TV→lichess.org (no middle
       server; built-in puzzles remain the fully functional offline baseline)
 - [ ] Rebalance rotation weights after living with it (the schedule is one line)

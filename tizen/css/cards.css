@@ -79,6 +79,19 @@
 .pc.w{ color:#EFE8D8; text-shadow:0 0 2px rgba(0,0,0,0.9), 0 1px 2px rgba(0,0,0,0.7); }
 .pc.b{ color:#14110D; text-shadow:0 0 2px rgba(234,227,210,0.5); }
 
+/* Gilded wash marking a key square. ::before is the first painted child, so
+   it sits under the piece glyph and coord labels (both later in DOM order)
+   rather than obscuring them, on light or dark squares alike. */
+.sq.mark::before{
+  content:'';
+  position:absolute;
+  top:0.6vmin; right:0.6vmin; bottom:0.6vmin; left:0.6vmin;
+  border-radius:0.4vmin;
+  background:rgba(198,161,91,0.24);
+  border:0.18vmin solid rgba(198,161,91,0.8);
+  box-shadow:0 0 1vmin rgba(198,161,91,0.35);
+}
+
 .solution{
   opacity:0; transition:opacity 1.4s ease;
   color:var(--brass); font-family:var(--display);
