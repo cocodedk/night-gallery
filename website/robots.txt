@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cocodedk.github.io/night-gallery/sitemap.xml
+Sitemap: https://nightgallery.cocode.dk/sitemap.xml
