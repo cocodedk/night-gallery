@@ -14,10 +14,10 @@ is styled to make the room it's in look better, not busier.
 
 ## Website
 
-- [English](https://cocodedk.github.io/night-gallery/)
-- [Dansk (Danish)](https://cocodedk.github.io/night-gallery/da/)
-- [فارسی (Persian)](https://cocodedk.github.io/night-gallery/fa/)
-- [Live demo in your browser](https://cocodedk.github.io/night-gallery/demo/)
+- [English](https://nightgallery.cocode.dk/)
+- [Dansk (Danish)](https://nightgallery.cocode.dk/da/)
+- [فارسی (Persian)](https://nightgallery.cocode.dk/fa/)
+- [Live demo in your browser](https://nightgallery.cocode.dk/demo/)
 
 ## Features
 
@@ -56,7 +56,7 @@ Remote mapping:
 
 ## Try it
 
-Open the [live demo](https://cocodedk.github.io/night-gallery/demo/), or
+Open the [live demo](https://nightgallery.cocode.dk/demo/), or
 clone the repo and open `tizen/index.html` in any browser: no build step,
 no server. Keys: → / ← next/back, Space or OK pause, S or RED reveal the
 puzzle solution, D or BLUE toggle the debug overlay.

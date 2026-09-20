@@ -23,6 +23,6 @@ app also runs unmodified in any desktop browser by opening
   every concept card and chess puzzle, by tag.
 - [CONTRIBUTING.md](CONTRIBUTING.md): local setup, test gates, how to add a
   content card, and the Chromium-76 compatibility rule.
-- [English site](https://cocodedk.github.io/night-gallery/)
-- [Persian site](https://cocodedk.github.io/night-gallery/fa/)
-- [Live browser demo](https://cocodedk.github.io/night-gallery/demo/)
+- [English site](https://nightgallery.cocode.dk/)
+- [Persian site](https://nightgallery.cocode.dk/fa/)
+- [Live browser demo](https://nightgallery.cocode.dk/demo/)
