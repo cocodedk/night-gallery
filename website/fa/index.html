@@ -45,6 +45,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Sans:wght@300;400&family=Vazirmatn:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="https://brand.cocode.dk/v1.css">
+<script type="module" src="https://brand.cocode.dk/v1.js"></script>
 
 <script type="application/ld+json">
 {
@@ -69,14 +71,14 @@
 </head>
 <body>
 
-<header class="site-header">
-  <a class="wordmark" href="/" lang="en" dir="ltr">Night Gallery</a>
-  <nav class="lang-switch" aria-label="زبان">
-    <a href="../" hreflang="en" lang="en">English</a> ·
-    <a href="../da/" hreflang="da" lang="da">Dansk</a> ·
-    <span aria-current="page">فارسی</span>
-  </nav>
-</header>
+<!-- The cocode.dk family frame. Without JavaScript its children show instead: a way home
+     and the language links. It replaces the site's own header (wordmark + language nav). -->
+<cocode-head project="Night Gallery" accent="#c6a15b" on-accent="#0c0a07" dark>
+  <a href="https://cocode.dk">cocode.dk</a>
+  <a href="../" hreflang="en">EN</a>
+  <a href="../da/" hreflang="da">DA</a>
+  <span class="on">FA</span>
+</cocode-head>
 
 <main>
 <h1 class="sr-only">Night Gallery: بومی آرام برای یادگیری، روی تلویزیون شما</h1>
@@ -176,7 +178,13 @@
 </section>
 </main>
 
-<footer><p>Apache-2.0 &nbsp;|&nbsp; © ۱۴۰۵ <a href="https://cocode.dk" target="_blank" rel="noreferrer">Cocode</a> &nbsp;|&nbsp; ساخته شده توسط <a href="https://linkedin.com/in/babakbandpey" target="_blank" rel="noreferrer">بابک بندپی</a></p></footer>
+<!-- Copyright, "ساخته شده توسط" and cocode.dk now come from cocode-foot below;
+     the Apache-2.0 mention is not an author/copyright/source link, so it stays. -->
+<footer><p>Apache-2.0</p></footer>
+
+<cocode-foot repo="cocodedk/night-gallery" dark>
+  <a href="https://cocode.dk">cocode.dk</a>
+</cocode-foot>
 
 </body>
 </html>
