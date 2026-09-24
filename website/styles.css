@@ -10,7 +10,12 @@
   --board-dark: #2C2721;
   --display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --utility: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
-  --header-h: 3.5rem;
+  /* <cocode-head> replaced .site-header (was 3.5rem/56px min-height, ~65px
+     rendered); measured at ~71px at desktop widths, where the hero's calc()
+     below matters most. Narrower phones wrap the frame to two lines and run
+     taller, same as the min-height here was always a floor, not an exact
+     value. */
+  --header-h: 71px;
 }
 
 /* Persian pages swap the whole page to Vazirmatn — Cormorant/Plex have no
@@ -50,34 +55,10 @@ a{ color:inherit; }
 }
 
 /* ---------- header ---------- */
-.site-header{
-  display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
-  gap:0.5rem 1.25rem; text-align:center;
-  min-height:var(--header-h);
-  max-width:64rem; margin-inline:auto;
-  padding:0.6rem 1.25rem;
-}
-@media (min-width:640px){
-  .site-header{ justify-content:space-between; text-align:start; flex-wrap:nowrap; }
-}
-.wordmark{
-  font-family:var(--display); font-weight:500; font-size:1.15rem;
-  color:var(--vellum); text-decoration:none; letter-spacing:0.02em;
-}
-.lang-switch{
-  font-family:var(--utility); font-weight:400; font-size:0.85rem;
-  letter-spacing:0.08em; color:var(--smoke);
-}
-.lang-switch a{
-  color:var(--smoke); text-decoration:none;
-  border-bottom:1px solid rgba(198,161,91,0.35); padding-bottom:0.15rem;
-  min-height:44px; display:inline-flex; align-items:center;
-}
-.lang-switch a:hover{ color:var(--brass); border-color:var(--brass); }
-.lang-switch [aria-current]{
-  color:var(--vellum); display:inline-flex; align-items:center; min-height:44px;
-}
-[dir="rtl"] .lang-switch{ letter-spacing:0; }
+/* The cocode.dk frame replaces the old .site-header bar and lines up with its
+   former column (max-width:64rem, 1.25rem gutter). --header-h still feeds the
+   hero's calc() below, updated to <cocode-head>'s own rendered height. */
+cocode-head, cocode-foot{ --cocode-max: 64rem; --cocode-gutter: 1.25rem; }
 
 /* ---------- hero / app recreation ---------- */
 .hero{
